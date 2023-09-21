@@ -2,6 +2,7 @@
 
 import React from "react";
 import Filters from "../layouts/Filters";
+import CustromPagination from '../layouts/CustromPagination'
 
 import ProductItem from "./ProductItem";
 
@@ -17,6 +18,10 @@ const ListProducts = ({ data }) => {
             {data?.products?.map((product) => (
               <ProductItem key={product?._id} product={product} />
             ))}
+            <CustromPagination
+              resPerPage={data?.resPerPage}
+              productsCount={data?.filterdProductsCount}
+            />
           </main>
         </div>
       </div>
