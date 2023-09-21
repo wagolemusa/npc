@@ -12,7 +12,7 @@ export const  newProduct = async(req, res, next) =>{
 // Get All products
 export  const getProducts = async(req, res, next) =>{
 
-    const resPerPage = 0
+    const resPerPage = 1
     const productsCount = await Product.countDocuments()
 
     const apiFilters = new APIFilters(Product.find(), req.query)
