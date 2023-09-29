@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Cart = () => {
   const { addItemToCart, deleteItemFromCart, cart } = useContext(CartContext);
-
+  
   const increaseQty = (cartItem) => {
     const newQty = cartItem?.quantity + 1;
     const item = { ...cartItem, quantity: newQty };
@@ -20,9 +20,7 @@ const Cart = () => {
   const decreaseQty = (cartItem) => {
     const newQty = cartItem?.quantity - 1;
     const item = { ...cartItem, quantity: newQty };
-
     if (newQty <= 0) return;
-
     addItemToCart(item);
   };
 
