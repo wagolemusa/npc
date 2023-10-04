@@ -5,8 +5,7 @@ import bcrypt from "bcryptjs";
 import dbConnect from "../../../backend/config/dbConnect"
 
 
-export default async function auth(req, res){
-    
+export default async function auth(req, res){  
     return await NextAuth(req, res, {
         session: {
             strategy: 'jwt'
