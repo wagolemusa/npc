@@ -13,11 +13,12 @@ export const AuthProvider =({ children }) => {
 
     const router = useRouter;
     
+    // Register user
     const registerUser = async({name, email, password}) => {
         try{
 
             const { data } = await axios.post(
-                `${process.env.API_URL}/api/auth/register`,
+                `${process.env.ENVIRONMENT_URL}/api/auth/register`,
                 {
                     name,
                     email,
@@ -34,6 +35,22 @@ export const AuthProvider =({ children }) => {
         }
     }
 
+    // Add Address
+    const addNewAddress = async(address) => {
+        try{
+            const { data } = await axios.post(
+                `${process.env.ENVIRONMENT_URL}/api/address`,
+                address
+            )
+            if(data){
+                router.push("/me");
+            }
+        }catch(error){
+            setError(error?.response?.data?.message)
+        }
+    }
+
+
     const clearErrors = () => {
         setError(null)
     }
@@ -45,7 +62,9 @@ export const AuthProvider =({ children }) => {
                 setUser,
                 error,
                 setError,
-                registerUser
+                registerUser,
+                addNewAddress,
+                clearErrors
             }}
         >
             {children}
