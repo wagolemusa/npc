@@ -3,7 +3,7 @@ import ProductDetails from '../../../components/products/ProductDetails'
 import axios from 'axios'
 
 const getProductDetails = async (id) => {
-    const { data } = await axios.get(`${process.env.API_URL}/api/products/${id}`);
+    const { data } = await axios.get(`${process.env.ENVIRONMENT_URL}/api/products/${id}`);
     return data?.product;
 };
 
