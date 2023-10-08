@@ -3,9 +3,9 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import AuthContext from "../../context/AuthContext";
-// import UserAddresses from "../user/UserAddresses";
+import UserAddresses from "../user/UserAddresses";
 
-const Profile = () => {
+const Profile = ({ addresses }) => {
 
   const { user } = useContext(AuthContext)
   return (
@@ -30,7 +30,7 @@ const Profile = () => {
 
       <hr className="my-4" />
 
-      {/* <UserAddresses /> */}
+      <UserAddresses  addresses={addresses}/>
 
       <Link href="/address/new">
         <button className="px-4 py-2 inline-block text-blue-600 border border-gray-300 rounded-md hover:bg-gray-100">

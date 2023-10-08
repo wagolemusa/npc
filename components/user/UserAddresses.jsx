@@ -1,8 +1,10 @@
 import Link from "next/link";
 import React from "react";
 
-const UserAddresses = () => {
-  return (
+const UserAddresses = ({ addresses }) => {
+  
+  
+  return  addresses?.map((address) => (
     <Link href={`/address/`}>
       <div className="mb-5 gap-4">
         <figure className="w-full flex align-center bg-gray-100 p-4 rounded-md cursor-pointer">
@@ -13,15 +15,16 @@ const UserAddresses = () => {
           </div>
           <figcaption className="text-gray-600">
             <p>
-              123 street <br /> Orlando, FL, 34456, US
+              {address.street} <br /> {address.city}, {address.state}, {" "}
+              {address.zipCode}, {address.country}
               <br />
-              Phone no: 1234568746
+              Phone no: {address.phoneNo}
             </p>
           </figcaption>
         </figure>
       </div>
     </Link>
-  );
+  ))
 };
 
 export default UserAddresses;
