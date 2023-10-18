@@ -2,7 +2,7 @@ import { createRouter } from 'next-connect';
 import dbConnect from "../../../backend/config/dbConnect";
 import { getProducts, newProduct } from "../../../backend/controllers/productController"
 // /backend/controllers/productController";
-import onError from "../../../backend/middlewares/auth"
+import onError from "../../../backend/middlewares/errors"
 
 const router = createRouter( { onError });
 
