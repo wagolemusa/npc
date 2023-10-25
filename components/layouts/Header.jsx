@@ -40,6 +40,7 @@ const Header = () => {
           </div>
           <Search />
 
+        <Link href="/allProducts">Products</Link>
           <div className="flex items-center space-x-2 ml-auto">
             <Link
               href="/cart"
