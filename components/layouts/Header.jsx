@@ -31,14 +31,14 @@ const Header = () => {
           <div className="flex-shrink-0 mr-5">
             <a href="/">
               <Image
-                src="/images/logo.png"
+                src="/images/logo.jpg"
                 height="40"
                 width="120"
                 alt="BuyItNow"
               />
             </a>
           </div>
-          <Search />
+          {/* <Search /> */}
 
         <Link href="/allProducts">Products</Link>
           <div className="flex items-center space-x-2 ml-auto">
