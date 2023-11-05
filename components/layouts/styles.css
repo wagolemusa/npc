@@ -331,3 +331,66 @@
     padding-top: 15px;
     color: #0D47A1;
   }
+  
+
+
+  /* Job Done */
+  .jobdone {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.autoplay-progress svg {
+  --progress: 0;
+  position: absolute;
+  left: 0;
+  top: 0px;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  stroke-width: 4px;
+  stroke: var(--swiper-theme-color);
+  fill: none;
+  stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+  stroke-dasharray: 125.6;
+  transform: rotate(-90deg);
+}
+
+.card img {
+  width: 250px;
+  height: 150px;
+  padding-left: 80px;
+  text-align: center;
+}
+
+.card h5{
+  font-size: 25px;
+  padding-top: 10px;
+}
+
+.jobdone h2{
+  font-weight: 600;
+  font-size: 40px;
+}

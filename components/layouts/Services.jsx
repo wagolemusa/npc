@@ -2,6 +2,7 @@ import React from "react";
 import vbb from '../../public/images/vbb.jpg'
 import Image from "next/image";
 import net from '../../public/images/net.jpg'
+import Card from './Card'
 
 function Services() {
     return (
@@ -185,7 +186,10 @@ function Services() {
                             </div>
                         </div>
                     
-        </section>          
+        </section>   
+        <br/>
+        
+        <Card/>       
 
         </>
     )
