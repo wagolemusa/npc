@@ -209,14 +209,6 @@
     padding-top: 8rem;
   }
 
-  .section-title {
-    font-size: 50px;
-    line-height: 1.2;
-    font-family: "Rubik", sans-serif;
-    color: var(--clr-body-heading);
-    font-weight: 600;
-    padding-left: 40px;
-  }
 
   .section-text {
     border-left: 10px solid #3B71CA;
