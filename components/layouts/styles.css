@@ -16,6 +16,44 @@
   color: red;
 }
 
+.navhead a {
+ color: #5a5757;;
+ text-decoration: none;
+ font-size: 20px;
+  padding: 25px 10px;
+
+  display: block;
+  font-weight: 600;
+}
+
+.header-topbar {
+  background-color: #1A237E;
+  padding: 10px 0;
+}
+.header-topbar-info p {
+  font-size: 15px;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.header-topbar-social a {
+  font-size: 15px;
+  color: #fff;
+  margin-left: 15px;
+}
+
+.header-topbar-social a{
+  /* text-align: end; */
+  
+}
+
+.line a {
+  padding: 5px 10px;
+  /* text-align: end; */
+  /* padding-ri: 10px; */
+  
+}
+
 .images1{
     /* width: 500px; */
   background-color: #cccccc;

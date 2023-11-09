@@ -25,7 +25,7 @@ const Header = () => {
   const cartItems = cart?.cartItems;
 
   return (
-    <header className="bg-white py-2 border-b">
+    <header className="sticky  top-0 z-50 bg-white py-2 border-b shadow-2xl">
       <div className="container max-w-screen-xl mx-auto px-4">
         <div className="flex flex-wrap items-center">
           <div className="flex-shrink-0 mr-5">
@@ -40,7 +40,13 @@ const Header = () => {
           </div>
           {/* <Search /> */}
 
-        <Link href="/allProducts">Products</Link>
+          <div className="navhead flex items-center space-x-2 ml-auto">
+          
+            <Link href="/about">About</Link>
+            <Link href="/services">Services</Link>
+            <Link href="/allProducts" className="flex">Shop</Link>
+            <Link href="/contant">Contact</Link>
+        </div>
           <div className="flex items-center space-x-2 ml-auto">
             <Link
               href="/cart"
@@ -54,7 +60,7 @@ const Header = () => {
             {!user ? (
               <Link
                 href="/login"
-                className="px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
+                className="btn btn-primary px-3 py-2 inline-block text-center text-gray-700 shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
               >
                 <i className="text-gray-400 w-5 fa fa-user"></i>
                 <span className="hidden lg:inline ml-1">Sign in</span>

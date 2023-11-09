@@ -4,6 +4,7 @@ import Header from '../components/layouts/Header'
 import Header2 from '../components/layouts/Header2'
 import Footer from '../components/layouts/Footer'
 import { GlobalProvider } from './GlobalProvider'
+import HeaderLine from "../components/layouts/HeaderLine"
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <GlobalProvider>
+        <HeaderLine />
         <Header />
         {/* <Header2 /> */}
         {children}
