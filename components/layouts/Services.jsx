@@ -2,6 +2,7 @@ import React from "react";
 import vbb from '../../public/images/vbb.jpg'
 import Image from "next/image";
 import net from '../../public/images/net.jpg'
+import ShortProduct from '../products/ShortProduct'
 import Card from './Card'
 
 function Services() {
@@ -85,6 +86,9 @@ function Services() {
             </div>
         </section>
         
+        {/* short projects */}
+        
+            <ShortProduct />
 
         {/* networking section */}
         <section className="networking">

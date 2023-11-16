@@ -45,3 +45,17 @@ export const getProduct = async(req, res, next) => {
     })
 }
 
+// Query three Data
+export const querythreeProduct = async(req, res, next) => {
+
+    const product = await Product.find().sort({_id: -1}).limit(3)
+    if(!product){
+        res.status(400).json({
+            error: "Product not Found."
+        })
+    }
+    res.status(200).json({
+        product,
+    })
+}
+

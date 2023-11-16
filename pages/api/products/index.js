@@ -1,6 +1,6 @@
 import { createRouter } from 'next-connect';
 import dbConnect from "../../../backend/config/dbConnect";
-import { getProducts, newProduct } from "../../../backend/controllers/productController"
+import { getProducts, newProduct, querythreeProduct } from "../../../backend/controllers/productController"
 // /backend/controllers/productController";
 import onError from "../../../backend/middlewares/errors"
 
@@ -10,6 +10,7 @@ dbConnect();
 
 router.post(newProduct);
 router.get(getProducts);
+router.get(querythreeProduct)
 
 
 export default router.handler();
