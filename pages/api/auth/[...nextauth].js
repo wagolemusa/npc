@@ -39,6 +39,13 @@ export default async function auth(req, res) {
       callbacks: {
         jwt: async ({ token, user }) => {
           user && (token.user = user);
+
+          if(req.url === '/api/auth/session?update'){
+            // hit the db and return the update
+
+            const updatedUser = await User.findById(token.user._id)
+            token.user = updatedUser
+          }
   
           return token;
         },

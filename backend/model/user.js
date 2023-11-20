@@ -18,10 +18,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter password"],
         minLength: [6, "Your password must be longer than 6 charactors"]
     },
-    avator: {
+    avatar: {
         public_id: String,
-        url: String
-    },
+        url: String,
+      },
     role: {
         type: String,
         default: "user"

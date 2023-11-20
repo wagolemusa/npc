@@ -10,6 +10,7 @@ const AuthContext = createContext();
 export const AuthProvider =({ children }) => {
     const [user, setUser] = useState(null);
     const [ error, setError] = useState(null);
+    const [loading, setLoading] = useState(null)
     const [updated, setUpdated] = useState(false);
 
     const router = useRouter;
@@ -35,6 +36,52 @@ export const AuthProvider =({ children }) => {
             setError(error?.response?.data?.message)
         }
     }
+
+
+    // Load User
+    const loadUser = async () => {
+        try {
+            setLoading(true);
+      
+            const { data } = await axios.get(
+                "/api/auth/session?update"
+            );
+      
+            if (data?.user) {
+                setUser(data.user)
+                router.replace("/me")
+            }
+          } catch (error) {
+            setLoading(false);
+            setError(error?.response?.data?.message);
+          }
+    }
+
+
+            // update Profile
+            const updateProfile = async (formData) => {
+                try {
+                  setLoading(true);
+            
+                  const { data } = await axios.put(
+                    `${process.env.ENVIRONMENT_URL}/api/auth/me/update`,
+                    formData,
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                    }
+                  );
+            
+                  if (data?.user) {
+                    loadUser();
+                    setLoading(false);
+                  }
+                } catch (error) {
+                  setLoading(false);
+                  setError(error?.response?.data?.message);
+                }
+              };
 
     // Add Address
     const addNewAddress = async(address) => {
@@ -68,6 +115,8 @@ export const AuthProvider =({ children }) => {
         }
     }
 
+
+
         // Dalete Address 
         const deleteAddress = async(id) => {
             try{
@@ -96,8 +145,10 @@ export const AuthProvider =({ children }) => {
                 error,
                 setError,
                 updated,
+                loading,
                 registerUser,
                 addNewAddress,
+                updateProfile,
                 updateAddress,
                 deleteAddress,
                 setUpdated,
