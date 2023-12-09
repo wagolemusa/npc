@@ -5,29 +5,42 @@ import Link from "next/link";
 import CartContext from "../../context/CartContext";
 import { toast } from "react-toastify";
 import BreadCrumbs from "../layouts/BreadCrumbs";
+import axios from "axios";
 
 const Shipping = ({ addresses }) => {
-
   const { cart } = useContext(CartContext);
-  const [shippingInfo, setShippingInfo] = useState("")
+
+  const [shippingInfo, setShippinInfo] = useState("");
 
   const setShippingAddress = (address) => {
-    setShippingInfo(address._id)
-  }
+    setShippinInfo(address._id);
+  };
 
   const checkoutHandler = async () => {
-    if(!shippingInfo){
-      return toast.error("please select your shipping address")
-    } else {
-     // move to stripe checkout or MPesa 
+    if (!shippingInfo) {
+      return toast.error("Please select your shipping address");
     }
-
-  }
+    // move to stripe checkoutpage
+    try {
+      const { data } = await axios.post(
+        `${process.env.ENVIRONMENT_URL}/api/orders/checkout_session`,
+        {
+          items: cart?.cartItems,
+          shippingInfo,
+        }
+      );
+      
+      console.log("Data => ", data)
+      window.location.href = data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const breadCrumbs = [
-    {name: "Home", url: "/"},
-    {name: "Cart", url: "/cart"},
-    {name: "Order", url: ""},
+    { name: "Home", url: "/" },
+    { name: "Cart", url: "/cart" },
+    { name: "Order", url: "" },
   ];
 
   return (
