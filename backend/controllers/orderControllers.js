@@ -15,7 +15,7 @@ export const checkoutSession = async (req, res) => {
         },
         unit_amount: item.price * 100,
       },
-    //   tax_rates: ["txr_1MUVJSAlHMiRMt8E2khIxJEi"],
+    //   tax_rates: ["txr_1MUVJSAlHMiRMt8E2khIxJEi"],m 
       quantity: item.quantity,
     };
   });
