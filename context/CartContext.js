@@ -82,13 +82,19 @@ export const CartProvider = ({ children }) => {
   }
 
 
+  const clearCart = () =>{
+    localStorage.removeItem("cart")
+    setCartToState();
+  }
+
   return (
     <CartContext.Provider
       value={{
         cart,
         addItemToCart,
         deleteItemFromCart,
-        saveOnCheckout
+        saveOnCheckout,
+        clearCart
       }}
     >
       {children}
