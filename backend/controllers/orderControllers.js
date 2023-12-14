@@ -1,7 +1,29 @@
 import getRawBody from "raw-body";
 import Stripe from "stripe";
 import Order from '../model/order'
+import APIFilters from "../utils/APIFilters"
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
+
+
+export const myOrders = async (req, res) => {
+  const resPerPage = 2;
+  const ordersCount = await Order.countDocuments();
+
+  const apiFilters = new APIFilters(Order.find(), req.query).pagination(
+    resPerPage
+  );
+
+  const orders = await apiFilters.query
+    .find({ user: req.user._id })
+    .populate("shippingInfo user");
+
+  res.status(200).json({
+    ordersCount,
+    resPerPage,
+    orders,
+  });
+};
+
 
 export const checkoutSession = async (req, res) => {
   const body = req.body;
@@ -46,46 +68,47 @@ export const checkoutSession = async (req, res) => {
 };
 
 
-export const webhook = async (req, res) => {
-  try {
-    const rawBody = await getRawBody(req);
-    const signature = req.headers["stripe-signature"];
 
-    const event = stripe.webhooks.constructEvent(
-      rawBody,
-      signature,
-      // process.env.STRIPE_WEBHOOK_SECRET
-    );
+// export const webhook = async (req, res) => {
+//   try {
+//     const rawBody = await getRawBody(req);
+//     const signature = req.headers["stripe-signature"];
 
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
+//     const event = stripe.webhooks.constructEvent(
+//       rawBody,
+//       signature,
+//       // process.env.STRIPE_WEBHOOK_SECRET
+//     );
 
-      const line_items = await stripe.checkout.sessions.listLineItems(
-        event.data.object.id
-      );
+//     if (event.type === "checkout.session.completed") {
+//       const session = event.data.object;
 
-      const orderItems = await getCartItems(line_items);
-      const userId = session.client_reference_id;
-      const amountPaid = session.amount_total / 100;
+//       const line_items = await stripe.checkout.sessions.listLineItems(
+//         event.data.object.id
+//       );
 
-      const paymentInfo = {
-        id: session.payment_intent,
-        status: session.payment_status,
-        amountPaid,
-        taxPaid: session.total_details.amount_tax / 100,
-      };
+//       const orderItems = await getCartItems(line_items);
+//       const userId = session.client_reference_id;
+//       const amountPaid = session.amount_total / 100;
 
-      const orderData = {
-        user: userId,
-        shippingInfo: session.metadata.shippingInfo,
-        paymentInfo,
-        orderItems,
-      };
+//       const paymentInfo = {
+//         id: session.payment_intent,
+//         status: session.payment_status,
+//         amountPaid,
+//         taxPaid: session.total_details.amount_tax / 100,
+//       };
 
-      const order = await Order.create(orderData);
-      res.status(201).json({ success: true });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+//       const orderData = {
+//         user: userId,
+//         shippingInfo: session.metadata.shippingInfo,
+//         paymentInfo,
+//         orderItems,
+//       };
+
+//       const order = await Order.create(orderData);
+//       res.status(201).json({ success: true });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
