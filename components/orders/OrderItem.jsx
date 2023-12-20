@@ -3,8 +3,8 @@ import image from "next/image"
 
 
 const OrderItem = ({ order }) => {
-
-  console.log("order", order)
+  console.log("ordersss", order)
+  console.log("ordersss", order?.totalAmount)
   return (
     <article className="p-3 lg:p-5 mb-5 bg-white border border-blue-600 rounded-md">
       <header className="lg:flex justify-between mb-4">
@@ -45,8 +45,8 @@ const OrderItem = ({ order }) => {
           <p className="text-gray-400 mb-1">Payment</p>
           <ul className="text-gray-600">
             <li className="text-green-400">PAID</li>
-            <li>Tax paid: ${order?.paymentInfo?.taxPaid}</li>
-            <li>Total paid: ${order?.paymentInfo.amountPaid} </li>
+            <li>Tax paid: ${order.tax}</li>
+            <li>Total paid: ${order.totalAmount} </li>
           </ul>
         </div>
       </div>

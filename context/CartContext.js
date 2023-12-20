@@ -8,6 +8,7 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [ error, setError] = useState(null);
 
   const router = useRouter();
 
@@ -81,6 +82,34 @@ export const CartProvider = ({ children }) => {
       router.push("/shipping")
   }
 
+  // On Pay
+  const saveOnCheckoutPay = ({ amount, tax, totalAmount }) => {
+    const checkoutInfo = {
+      amount,
+      tax,
+      totalAmount
+    };
+
+    const newCart = { ...cart, checkoutInfo }
+      localStorage.setItem("cart", JSON.stringify(newCart))
+      setCartToState();
+      router.push("/pay")
+  }
+
+
+//   const paycash = async() => {
+//     try{
+//         const { data } = await axios.post(
+//             `${process.env.ENVIRONMENT_URL}/api/orders/checkoutPay`,
+      
+//         )
+//         if(data){
+//             router.push("/me");
+//         }
+//     }catch(error){
+//         setError(error?.response?.data?.message)
+//     }
+// }
 
   const clearCart = () =>{
     localStorage.removeItem("cart")
@@ -94,7 +123,9 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         deleteItemFromCart,
         saveOnCheckout,
-        clearCart
+        clearCart,
+        saveOnCheckoutPay,
+        
       }}
     >
       {children}
