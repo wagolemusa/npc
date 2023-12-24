@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const orderSchema = mongoose.Schema({
     shippingInfo: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'Address'
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'User'
     },
     orderItems: [
@@ -36,24 +36,19 @@ const orderSchema = mongoose.Schema({
             }
         }
     ],
-    paymentInfo: {
-        id: {
-            type: String,
-            required: true,
-        },
-        status: {
-            type: String,
-            required: true,
-        },
-        taxPaid: {
-            type: Number,
-            required: true
-        },
-        amountPaid: {
-            type: Number,
-            required: true
-        }
+    tax: {
+        type: Number,
+        required: false
     },
+    amount: {
+        type: Number,
+        required: false
+    },
+    totalAmount: {
+        type: Number,
+        required: false
+    },
+    
     orderStatus: {
         type: String,
         default: 'Processing'

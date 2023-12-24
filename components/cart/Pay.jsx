@@ -6,57 +6,66 @@ import CartContext from "../../context/CartContext";
 import { toast } from "react-toastify";
 import BreadCrumbs from "../layouts/BreadCrumbs";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import AuthContext from "../../context/AuthContext";
 
-const Shipping = ({ addresses }) => {
-  const { cart, saveOnCheckoutPay } = useContext(CartContext);
+
+
+const Pay = ({ addresses}) => {
+    const router = useRouter();
+  const { cart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
   const [shippingInfo, setShippinInfo] = useState("");
-
+ 
   const setShippingAddress = (address) => {
     setShippinInfo(address._id);
   };
 
-  // PAying using Stripe
-  // const checkoutHandler = async () => {
-  //   if (!shippingInfo) {
-  //     return toast.error("Please select your shipping address");
-  //   }
-  //   // move to stripe checkoutpage
-  //   try {
-  //     const { data } = await axios.post(
-  //       `${process.env.ENVIRONMENT_URL}/api/orders/checkout_session`,
-  //       {
-  //         items: cart?.cartItems,
-  //         shippingInfo,
-  //       }
-  //     );
-      
-  //     console.log("Data => ", data)
-  //     window.location.href = data.url;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
-  const amountWithoutTax = cart?.cartItems?.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
+const  setUSer = (user._id)
+
+const amountWithoutTax = cart?.cartItems?.reduce(
+  (acc, item) => acc + item.quantity * item.price,
+  0
+);
+
+const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
+
+const totalAmount = (Number(amountWithoutTax) + Number(taxAmount)).toFixed(2);
+
+const tax = taxAmount;
+const amount = amountWithoutTax;
 
 
-  const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
-  const totalAmount = (Number(amountWithoutTax) + Number(taxAmount)).toFixed(2);
 
-  const checkoutHandlerPay = () => {
-    const data = {
-      amount: amountWithoutTax,
-      tax: taxAmount,
-      totalAmount
-    }
+  const submitHandlerpay = async (e) =>{
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+ 
+          `${process.env.ENVIRONMENT_URL}/api/orders/checkoutPay`,
+          {
+              
+              tax: tax,
+              amount: amount,
+              totalAmount: totalAmount,
+              user,
+              orderItems: cart?.cartItems,
+              shippingInfo,
+              
+          }
+         
+      );
 
-    saveOnCheckoutPay(data)
-
+      if (data) {
+          router.push("/me");
+      }
+  } catch (error) {
+      console.error('Error during checkout:', error);
+      // Handle the error, show a message to the user, or redirect to an error page.
   }
+}
 
 
   const breadCrumbs = [
@@ -74,7 +83,7 @@ const Shipping = ({ addresses }) => {
           <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
             <main className="md:w-2/3">
               <article className="border border-gray-200 bg-white shadow-sm rounded p-4 lg:p-6 mb-5">
-                <h2 class="text-xl font-semibold mb-5">Shipping information</h2>
+                <h2 class="text-xl font-semibold mb-5">Shipping information pay</h2>
 
                 <div class="grid sm:grid-cols-2 gap-4 mb-6">
                     {addresses?.map((address) => (
@@ -119,9 +128,9 @@ const Shipping = ({ addresses }) => {
                     Back
                   </Link>
                   <a className="px-5 py-2 inline-block text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer"
-                    onClick={checkoutHandlerPay}
+                    onClick={submitHandlerpay}
                   >
-                    Checkout
+                    Make Payment
                   </a>
                 </div>
               </article>
@@ -180,4 +189,4 @@ const Shipping = ({ addresses }) => {
   );
 };
 
-export default Shipping;
+export default Pay
