@@ -16,8 +16,6 @@ const ListOrders = ({ orders }) => {
   const router = useRouter();
 
   const orderSuccess = params.get("order_success")
-
-
   useEffect(() => {
     if(orderSuccess == "true"){
       clearCart();
