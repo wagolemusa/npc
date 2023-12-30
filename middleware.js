@@ -15,7 +15,7 @@ export default withAuth(async function middleware(req) {
     callbacks:{
         authorized: ({ token }) => {
             if(!token){
-                return true
+                return false
             }
         }
     }

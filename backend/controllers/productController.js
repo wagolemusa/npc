@@ -1,13 +1,18 @@
 import Product from '../model/product'
 import APIFilters from '../utils/APIFilters';
+import fs from 'fs'
+import { uploads } from '../utils/cloudinary';
 
 // Post All Products
-export const  newProduct = async(req, res, next) =>{
+export const newProduct = async (req, res, next) => {
+    // req.body.user = req.user._id;
+
+    // console.log("xxxx",req.body.user )
     const product = await Product.create(req.body);
     res.status(201).json({
-        product
-    })
-}
+      product,
+    });
+  };
 
 // Get All products
 export  const getProducts = async(req, res, next) =>{
@@ -59,3 +64,39 @@ export const querythreeProduct = async(req, res, next) => {
     })
 }
 
+
+// upload multiple images
+export const uploadProductImages = async(req, res, next) => {
+
+    let product = await Product.findById(req.query.id);
+
+    if(!product){
+        res.status(404).json({
+            error: "Product not found"
+        })
+    }
+
+    const uploader = async(path) => await uploads(path, "npc");
+    
+    const urls = []
+    const files = req.files;
+
+    for(const file of files){
+        const { path } = file
+        console.log("path", path)
+        const imgUrl = await uploader(path)
+        urls.push(imgUrl)
+        fs.unlinkSync(path)
+    }
+
+    product = await Product.findByIdAndUpdate(req.query.id, {
+        images: urls,
+    });
+
+    res.status(200).json({
+        data: urls,
+        product,
+    })
+    
+
+}
