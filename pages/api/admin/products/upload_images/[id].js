@@ -3,7 +3,8 @@ import dbConnect from "../../../../../backend/config/dbConnect";
 import onError from "../../../../../backend/middlewares/errors"
 import { updateProfile } from '../../../../../backend/controllers/authControllers';
 import upload from '../../../../../backend/utils/multer';
-import { isAuthenticatedUser } from '../../../../../backend/middlewares/auth';
+// import { isAuthenticatedUser } from '../../../../../backend/middlewares/auth';
+import { uploadProductImages } from '../../../../../backend/controllers/productController';
 // /backend/controllers/productController";
 
 
@@ -22,6 +23,6 @@ export const config = {
 
 const uploadMeddleware = upload.array("image")
 
-router.use( uploadMeddleware, isAuthenticatedUser,authorizeRoles("admin")).post(uploadProductImages)
+router.use( uploadMeddleware).post(uploadProductImages)
 
 export default router.handler();

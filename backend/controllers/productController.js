@@ -1,12 +1,13 @@
 import Product from '../model/product'
 import APIFilters from '../utils/APIFilters';
 import fs from 'fs'
+import { uploads } from '../utils/cloudinary';
 
 // Post All Products
 export const newProduct = async (req, res, next) => {
-    req.body.user = req.user._id;
+    // req.body.user = req.user._id;
 
-    console.log("xxxx",req.body.user )
+    // console.log("xxxx",req.body.user )
     const product = await Product.create(req.body);
     res.status(201).json({
       product,
@@ -75,13 +76,14 @@ export const uploadProductImages = async(req, res, next) => {
         })
     }
 
-    const uploader = async (path) => await uploads(path, "npc");
+    const uploader = async(path) => await uploads(path, "npc");
     
     const urls = []
     const files = req.files;
 
     for(const file of files){
         const { path } = file
+        console.log("path", path)
         const imgUrl = await uploader(path)
         urls.push(imgUrl)
         fs.unlinkSync(path)
@@ -92,7 +94,7 @@ export const uploadProductImages = async(req, res, next) => {
     });
 
     res.status(200).json({
-        data: url,
+        data: urls,
         product,
     })
     

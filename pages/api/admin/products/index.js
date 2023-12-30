@@ -3,7 +3,7 @@ import dbConnect from "../../../../backend/config/dbConnect";
 import onError from "../../../../backend/middlewares/errors";
 
 import {
-  authorizeRoles,
+  
   isAuthenticatedUser,
 } from "../../../../backend/middlewares/auth";
 
@@ -16,6 +16,6 @@ const router = createRouter({
 dbConnect();
 
 
-router.use(isAuthenticatedUser, authorizeRoles("admin")).post(newProduct);
+router.use(isAuthenticatedUser).post(newProduct);
 
 export default router.handler();
