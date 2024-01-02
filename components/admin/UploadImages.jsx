@@ -1,7 +1,8 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductContext from "../../context/ProductContext";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 
 const UploadImages = ({ id }) => {
@@ -29,6 +30,13 @@ const UploadImages = ({ id }) => {
       reader.readAsDataURL(file);
     });
   };
+
+  useEffect(() =>{
+    if(error){
+      toast.error(error);
+      clearErrors();
+    }
+  },[error, updated])
 
 
   const submitHandler = (e) => {
