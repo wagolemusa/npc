@@ -1,7 +1,7 @@
 import Product from '../model/product'
 import APIFilters from '../utils/APIFilters';
 import fs from 'fs'
-import { uploads } from '../utils/cloudinary';
+import { cloudinary, uploads } from '../utils/cloudinary';
 
 // Post All Products
 export const newProduct = async (req, res, next) => {
@@ -88,15 +88,51 @@ export const uploadProductImages = async(req, res, next) => {
         urls.push(imgUrl)
         fs.unlinkSync(path)
     }
-
     product = await Product.findByIdAndUpdate(req.query.id, {
         images: urls,
     });
-
     res.status(200).json({
         data: urls,
         product,
     })
-    
-
 }
+
+
+// update Products
+export const updateProduct = async(req, res, next) => {
+    let product = await Product.findById(req.query.id);
+
+    console.log("prrrrr", product)
+
+    if(!product){
+        res.status(404).json({
+            error: "Product not found"
+        })
+    }
+    product = await Product.findByIdAndUpdate(req.query.id, req.body)
+    res.status(200).json({
+        product,
+    })
+};
+
+
+// Delete images associated with the product
+export const deleteProduct = async(req, res, next) => {
+    let product = await Product.findById(req.query.id);
+
+    if(!product){
+        res.status(404).json({
+            error: "Product not found"
+        })
+    }  
+    // images associated with Ihe products
+    for(let i = 0; i < product.images.length; i++){
+        const res = await cloudinary.v2.uploader.destroy(
+            product.images[i].public_id
+        );
+    }
+    await product.deleteOne();
+    res.status(200).json({
+        success: true,
+    })
+};

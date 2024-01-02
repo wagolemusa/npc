@@ -12,6 +12,7 @@ export const ProductProvider = ({ children }) => {
 
   const router = useRouter();
 
+  // Create Products
   const newProduct = async (product) => {
     try {
       const { data } = await axios.post(
@@ -28,6 +29,25 @@ export const ProductProvider = ({ children }) => {
   };
 
 
+  // update Products
+  const updateProduct = async (product, id) => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.ENVIRONMENT_URL}/api/admin/products/${id}`,
+        product
+      );
+
+      if (data) {
+        setUpdated(true);
+        router.replace(`/admin/products/${id}`);
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
+
+  // Upload Images
   const uploadProductImages = async (formData, id) => {
     try {
       setLoading(true);
@@ -49,6 +69,22 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // Delete
+  const deleteProduct = async (id) => {
+    try{
+      const { data } = await axios.delete(
+        `${process.env.ENVIRONMENT_URL}/api/admin/products/${id}`
+      );
+      if(data?.success){
+        router.replace(`/admin/products`)
+      }
+    
+  } catch(error){
+    setError(error?.response?.data.message);
+  }
+}
+ 
+// clear Errors
   const clearErrors = () => {
     setError(null);
   };
@@ -62,7 +98,10 @@ export const ProductProvider = ({ children }) => {
         uploadProductImages,
         setUpdated,
         newProduct,
+        updateProduct,
         clearErrors,
+        deleteProduct
+
         
       }}
     >
