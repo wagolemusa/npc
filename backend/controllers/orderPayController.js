@@ -3,6 +3,7 @@ import Order from '../model/order'
 import APIFilters from "../utils/APIFilters"
 
 
+
 export const myOrders = async (req, res) => {
   const resPerPage = 2;
   const ordersCount = await Order.countDocuments();
@@ -21,6 +22,36 @@ export const myOrders = async (req, res) => {
     orders,
   });
 };
+
+export const getAdminOrders = async (req, res) => {
+  const ordersCount = await Order.countDocuments();
+
+  const apiFilters = new APIFilters(Order.find(), req.query).pagination(
+    resPerPage,
+  );
+
+  const orders = await apiFilters.query
+    .populate("shippingInfo user");
+
+  res.status(200).json({
+    ordersCount,
+    resPerPage,
+    orders,
+  });
+};
+
+
+export const getOrder = async (req, res) => {
+  const order = await Order.findById().populate(
+    "shippingInfo user"
+  );
+
+
+  res.status(200).json({
+    order,
+  });
+};
+
 
 
 export const checkoutSession = async (req, res) => {

@@ -5,6 +5,42 @@ import APIFilters from "../utils/APIFilters"
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 
+
+  export const getOrders = async (req, res) => {
+    const resPerPage = 2;
+    const ordersCount = await Order.countDocuments();
+  
+    const apiFilters = new APIFilters(Order.find(), req.query).pagination(
+      resPerPage
+    );
+  const orders = await apiFilters.query
+    .populate("shippingInfo user");
+
+  res.status(200).json({
+    ordersCount,
+    resPerPage,
+    orders,
+  });
+};
+
+
+// Get orders by ID
+export const getOrder = async (req, res) => {
+  const order = await Order.findById(req.query.id).populate(
+    "shippingInfo user"
+  );
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+  res.status(200).json({
+    order,
+  });
+};
+
+
+
+
 export const myOrders = async (req, res) => {
   const resPerPage = 2;
   const ordersCount = await Order.countDocuments();
