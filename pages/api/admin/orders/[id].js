@@ -6,7 +6,7 @@ import {
   
   isAuthenticatedUser,
 } from "../../../../backend/middlewares/auth";
-import { getOrder } from '../../../../backend/controllers/orderControllers';
+import { deleteOrder, getOrder, updateOrder } from '../../../../backend/controllers/orderControllers';
 
 
 
@@ -18,5 +18,8 @@ dbConnect();
 
 
 router.use(isAuthenticatedUser).get(getOrder);
+router.use(isAuthenticatedUser).put(updateOrder);
+router.use(isAuthenticatedUser).delete(deleteOrder);
+
 
 export default router.handler();

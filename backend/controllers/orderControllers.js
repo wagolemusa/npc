@@ -38,9 +38,39 @@ export const getOrder = async (req, res) => {
   });
 };
 
+// update user Order
+export const updateOrder = async (req, res) => {
+  let order = await Order.findById(req.query.id)
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  order = await Order.findByIdAndUpdate(req.query.id, {
+    orderStatus: req.body.orderStatus
+  })
+  res.status(200).json({
+    success: true,
+    order,
+  });
+};
 
 
+// Delete Order
+export const deleteOrder = async (req, res) => {
+  const order = await Order.findById(req.query.id)
 
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+   await order.deleteOne();
+  res.status(200).json({
+    success: true
+  });
+};
+
+
+// get user orders
 export const myOrders = async (req, res) => {
   const resPerPage = 2;
   const ordersCount = await Order.countDocuments();
