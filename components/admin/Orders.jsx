@@ -1,12 +1,24 @@
 'use client'
 
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import CustromPagination  from '../layouts/CustromPagination'
+import OrderContext from "../../context/OrderContext";
+import { toast } from "react-toastify";
 
 const Orders = ({ orders }) => {
+  const { deleteOrder, error, clearErrors } = useContext(OrderContext)
 
-  console.log("xxxxx", orders)
+  useEffect(() => {
+    if(error){
+      toast.error(error);
+      clearErrors();
+    }
+  },[error])
+
+  const deleteHandler = (id) =>{
+    deleteOrder(id);
+  }
   return (
  
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -43,7 +55,9 @@ const Orders = ({ orders }) => {
                         >
                           <i className="fa fa-pencil" aria-hidden="true"></i>
                         </Link>
-                        <a className="px-2 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer">
+                        <a className="px-2 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer"
+                          onClick={() => deleteHandler(order?._id)}
+                        >
                           <i className="fa fa-trash" aria-hidden="true"></i>
                         </a>
                       </div>
