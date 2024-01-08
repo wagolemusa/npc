@@ -1,5 +1,7 @@
 import User from "../model/user";
 import { uploads } from "../utils/cloudinary";
+import APIFilters from '../utils/APIFilters';
+
 import fs from 'fs'
 import bcrypt from "bcryptjs"
 
@@ -58,5 +60,70 @@ export const updatePassword = async (req, res, next) => {
 
   res.status(200).json({
     sucess: true,
+  });
+};
+
+
+
+// get single user details
+export const getUser = async (req, res) => {
+  let user = await User.findById(req.query.id)
+
+  if (!user) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+};
+
+
+// update user Order
+export const updateUses = async (req, res) => {
+  let user = await User.findById(req.query.id)
+
+  if (!user) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  user = await User.findByIdAndUpdate(req.query.id, req.body.userData)
+  res.status(200).json({
+    success: true,
+    user,
+  });
+};
+
+
+
+// Delete user
+export const deleteUsers = async (req, res) => {
+  const user = await User.findById(req.query.id)
+  if (!user) {
+    return next(new ErrorHandler("No user found with this ID", 404));
+  }
+   await user.deleteOne();
+  res.status(200).json({
+    success: true
+  });
+};
+
+
+// get all users
+export const getUsers = async (req, res) => {
+  const resPerPage = 2;
+  const userCount = await User.countDocuments();
+
+  const apiFilters = new APIFilters(User.find(), req.query).pagination(
+    resPerPage
+  );
+  const users = await apiFilters.query
+
+  res.status(200).json({
+    userCount,
+    resPerPage,
+    users,
   });
 };
