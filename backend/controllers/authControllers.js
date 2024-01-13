@@ -72,8 +72,6 @@ export const getUser = async (req, res) => {
   if (!user) {
     return next(new ErrorHandler("No Order found with this ID", 404));
   }
-
-
   res.status(200).json({
     success: true,
     user,
@@ -82,13 +80,12 @@ export const getUser = async (req, res) => {
 
 
 // update user Order
-export const updateUses = async (req, res) => {
+export const updateUser = async (req, res) => {
   let user = await User.findById(req.query.id)
 
   if (!user) {
     return next(new ErrorHandler("No Order found with this ID", 404));
   }
-
   user = await User.findByIdAndUpdate(req.query.id, req.body.userData)
   res.status(200).json({
     success: true,

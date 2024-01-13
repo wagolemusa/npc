@@ -1,10 +1,26 @@
-import React from "react";
+"use client"
+
+import React, { useContext, useEffect } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import AuthContext from "../../context/AuthContext";
+// import CustromPagination  from '../layouts/CustromPagination'
+
 
 const Users = ({ data }) => {
-
-    console.log("User Data", data)
-
+    const { error, deleteUser, clearErrors } = useContext(AuthContext);
+  
+    useEffect(() => {
+      if (error) {
+        toast.error(error);
+        clearErrors();
+      }
+    }, [error]);
+  
+    const deleteHandler = (id) => {
+      deleteUser(id);
+    };
+  
     return (
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -41,7 +57,9 @@ const Users = ({ data }) => {
                                 >
                                     <i className="fa fa-pencil" aria-hidden="true"></i>
                                 </Link>
-                                <a className="px-2 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer">
+                                <a className="px-2 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => deleteHandler(user?._id)}
+                                >
                                     <i className="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -51,6 +69,14 @@ const Users = ({ data }) => {
               
                 </tbody>
             </table>
+            {/* {data?.users?.length > data?.resPerPage && ((
+        <div className="mb-6">
+          <CustromPagination(
+            resPerPage={data.users.resPerPage}
+            productsCount={data.users.ordersCount}
+          />
+        </div>
+            )} */}
         </div>
     );
 };

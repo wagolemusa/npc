@@ -6,7 +6,7 @@ import {
   
   isAuthenticatedUser,
 } from "../../../../backend/middlewares/auth";
-import { deleteUsers, getUser, updateUsers } from '../../../../backend/controllers/authControllers';
+import { deleteUsers, getUser, updateUser } from '../../../../backend/controllers/authControllers';
 
 
 
@@ -18,7 +18,7 @@ dbConnect();
 
 
 router.use(isAuthenticatedUser).get(getUser);
-router.use(isAuthenticatedUser).put(updateUsers);
+router.use(isAuthenticatedUser).put(updateUser);
 router.use(isAuthenticatedUser).delete(deleteUsers);
 
 
