@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 
 import CartContext from "../../context/CartContext";
 import Link from "next/link";
+import Image from "next/image";
 
 const Cart = () => {
   const { addItemToCart, deleteItemFromCart, cart, saveOnCheckout } = useContext(CartContext);
@@ -68,7 +69,7 @@ const Cart = () => {
                           <figure className="flex leading-5">
                             <div>
                               <div className="block w-16 h-16 rounded border border-gray-200 overflow-hidden">
-                                <img src={cartItem.image} alt={cartItem.name} />
+                              <Image src={cartItem.image} alt={cartItem.name} />
                               </div>
                             </div>
                             <figcaption className="ml-3">
@@ -177,7 +178,7 @@ const Cart = () => {
                   </a>
 
                   <Link
-                    href="/"
+                    href="/allProducts"
                     className="px-4 py-3 inline-block text-lg w-full text-center font-medium text-green-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100"
                   >
                     Back to shop

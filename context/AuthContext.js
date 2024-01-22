@@ -29,7 +29,7 @@ export const AuthProvider =({ children }) => {
             )
 
             if(data?.user){
-                router.push('/')
+                router.replace("/login")
             }
 
         } catch (error){
@@ -162,6 +162,7 @@ export const AuthProvider =({ children }) => {
           );
     
           if (data?.success) {
+            
             router.replace(`/admin/users`);
           }
         } catch (error) {
@@ -184,7 +185,6 @@ export const AuthProvider =({ children }) => {
             }
         }   
     
-
 
     const clearErrors = () => {
         setError(null)

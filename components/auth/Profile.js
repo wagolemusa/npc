@@ -8,6 +8,7 @@ import UserAddresses from "../user/UserAddresses";
 const Profile = ({ addresses }) => {
 
   const { user } = useContext(AuthContext)
+  console.log("userAddress", user)
   return (
     <>
 
