@@ -39,7 +39,6 @@ const Cart = () => {
       tax: taxAmount,
       totalAmount
     }
-
     saveOnCheckout(data)
 
   }
