@@ -15,11 +15,9 @@ export default function AdminLayout({ children }) {
                 <div className="container max-w-screen-xl mx-auto px-4">
                     <div className="flex flex-col md:flex-row -mx-4">
                             <Sidebar />
-                        <main className="md:w-2/3 lg:w-3/4 px-4">
-                            <main className="md:w-2/3 lg:w-3/4 px-4">
-                                <article className="border border-gray-200 bg-white shadow-sm rounded mb-5 p-3 lg:p5">
-                                    {children }
-                                </article>
+                        <main className="md:w-1/3 lg:w-3/4 px-5">
+                            <main className="md:w-1/8 lg:w-3/8 px-8">
+                            {children }
                             </main>
                         </main>
                     </div>

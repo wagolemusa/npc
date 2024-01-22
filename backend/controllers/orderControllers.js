@@ -9,7 +9,6 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
   export const getOrders = async (req, res) => {
     const resPerPage = 2;
     const ordersCount = await Order.countDocuments();
-  
     const apiFilters = new APIFilters(Order.find(), req.query).pagination(
       resPerPage
     );
@@ -22,6 +21,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
     orders,
   });
 };
+
 
 
 // Get orders by ID
