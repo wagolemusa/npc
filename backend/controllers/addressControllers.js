@@ -1,35 +1,47 @@
 import Address from "../model/address";
 import ErrorHandler from "../utils/errorHandler";
 
+// export const newAddress = async (req, res) => {
+//   try {
+
+//     // let { user } = req;
+//     // const { id } = req.params;
+//     req.body.user = req.user.id;
+//     const address = await new Address({
+//       // user: user.id,
+//       ...req.body
+//       // street:req.body.street,
+//       // city:req.body.city,
+//       // state:req.body.state,
+//       // phoneNo:req.body.phoneNo,
+//       // zipCode:req.body.zipCode,
+//       // country:req.body.country,
+
+//     });
+//     res.status(200).json({
+//       address,
+//     });
+
+//   } catch (err) {
+//     console.log(err)
+//   }
+
+// };
+
+
 export const newAddress = async (req, res) => {
-  try {
+  req.body.user = req.user._id;
 
-    // let { user } = req;
-    // const { id } = req.params;
-    req.body.user = req.user.id;
-    const address = await new Address({
-      user: user.id,
-      ...req.body
-      // street:req.body.street,
-      // city:req.body.city,
-      // state:req.body.state,
-      // phoneNo:req.body.phoneNo,
-      // zipCode:req.body.zipCode,
-      // country:req.body.country,
+  const address = await Address.create(req.body);
 
-    });
-    res.status(200).json({
-      address,
-    });
-
-  } catch (err) {
-    console.log(err)
-  }
-
+  res.status(200).json({
+    address,
+  });
 };
 
+
 export const getAddresses = async (req, res) => {
-  const addresses = await Address.find();
+  const addresses = await Address.find({user: req.user._id});
   res.status(200).json({
     addresses
   })

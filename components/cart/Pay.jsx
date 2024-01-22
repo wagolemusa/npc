@@ -13,7 +13,7 @@ import AuthContext from "../../context/AuthContext";
 
 const Pay = ({ addresses}) => {
     const router = useRouter();
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
 
   const [shippingInfo, setShippinInfo] = useState("");
@@ -57,9 +57,10 @@ const amount = amountWithoutTax;
           }
          
       );
-
+        
+      clearCart()
       if (data) {
-          router.push("/me");
+          router.push("/me/orders");
       }
   } catch (error) {
       console.error('Error during checkout:', error);

@@ -50,7 +50,8 @@ const UpdateOrder = ({ order }) => {
                 <div>
                     <p className="text-gray-400 mb-1">Person</p>
                     <ul className="text-gray-600">
-                        <li>{order?.user?.name}</li>
+                        <li>{order?.user?.name}</li>ev
+                        
                         <li>Phone: {order?.shippingInfo?.phoneNo}</li>
                         <li>Email: {order?.user.email}</li>
                     </ul>

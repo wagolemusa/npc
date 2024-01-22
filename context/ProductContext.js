@@ -83,6 +83,22 @@ export const ProductProvider = ({ children }) => {
     setError(error?.response?.data.message);
   }
 }
+
+
+const postReview = async (reviewData) => {
+  try {
+    const { data } = await axios.put(
+      `${process.env.ENVIRONMENT_URL}/api/products/review`,
+      reviewData
+    );
+
+    if (data?.success) {
+      router.replace(`/product/${reviewData?.productId}`);
+    }
+  } catch (error) {
+    setError(error?.response?.data?.message);
+  }
+};
  
 // clear Errors
   const clearErrors = () => {
@@ -100,9 +116,8 @@ export const ProductProvider = ({ children }) => {
         newProduct,
         updateProduct,
         clearErrors,
-        deleteProduct
-
-        
+        deleteProduct,
+        postReview
       }}
     >
       {children}
