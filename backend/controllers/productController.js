@@ -151,7 +151,9 @@ export const createProductReview = async (req, res, next) => {
     let product = await Product.findById(productId);
   
     if (!product) {
-      return next(new ErrorHandler("Product not found.", 404));
+      return  res.status(200).json({
+        success: true,
+    });
     }
   
     const isReviewed = product?.reviews?.find(

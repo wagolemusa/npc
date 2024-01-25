@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 // import BreadCrumbs from "../layout/BreadCrumbs";
-
+import { useSearchParams, useRouter } from "next/navigation";
 import { countries } from "countries-list";
 import Sidebar from "../layouts/Sidebar";
 import AuthContext from "../../context/AuthContext";
@@ -11,6 +11,7 @@ import AuthContext from "../../context/AuthContext";
 const NewAddress = () => {
 
     const { error, addNewAddress, clearErrors } = useContext(AuthContext)
+    const { user } = useContext(AuthContext);
 
     const countriesList = Object.values(countries);
     const [ street, setStreet ] = useState('');
@@ -20,7 +21,13 @@ const NewAddress = () => {
     const [ phoneNo, setPhoneNo ] = useState('');
     const [ country, setCountry ] = useState('');
 
-
+    useEffect(() => {
+      if (error) {
+        toast.error(error);
+        clearErrors();
+      }
+    }, [error]);
+  
     const submitHandler = (e) =>{
         e.preventDefault();
 
@@ -30,10 +37,13 @@ const NewAddress = () => {
             state,
             zipCode,
             phoneNo,
-            country
+            country,
+            user
         }
 
         addNewAddress(newAddress)
+        router.replace("/me");
+
     }
 
   return (

@@ -12,6 +12,7 @@ import Reviews from "../review/Reviews";
 const ProductDetails = ({ product }) => {
 
   const { addItemToCart } = useContext(CartContext)
+  
   const { canUserReview, canReview } = useContext(OrderContext)
   
   const imgRef = useRef(null);
@@ -24,7 +25,8 @@ const ProductDetails = ({ product }) => {
 
   useEffect(() => {
     canUserReview(product?._id)
-  })
+  },[])
+
   const inStock = product?.stock >= 1;
 
   const breadCrumbs = [
@@ -35,17 +37,18 @@ const ProductDetails = ({ product }) => {
     },
   ];
 
-  // Add to cart function
-  const addToCartHandler = () => {
-    addItemToCart({
-      product: product._id,
-      name: product.name,
-      price: product.price,
-      images: product.images[0].url,
-      stock: product.stock,
-      seller: product.seller,
-    })
-  }
+    // Add to cart function
+    const addToCartHandler = () => {
+      addItemToCart({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0].url,
+        stock: product.stock,
+        seller: product.seller,
+      })
+    }
+
 
   return (
     <>
@@ -156,7 +159,7 @@ const ProductDetails = ({ product }) => {
 
         
           {/* <NewReview /> */}
-          {canReview && <NewReview product={product} />}
+          {/* {canReview && <NewReview product={product} />} */}
           <hr />
 
           <div className="font-semibold">

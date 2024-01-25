@@ -12,17 +12,15 @@ export default async function auth(req, res) {
       },
       providers: [
         CredentialsProvider({
+
           async authorize(credentials, req) {
             dbConnect();
   
             const { email, password } = credentials;
-  
             const user = await User.findOne({ email }).select("+password");
-  
             if (!user) {
               throw new Error("Invalid Email or Password");
             }
-  
             const isPasswordMatched = await bcrypt.compare(
               password,
               user.password
