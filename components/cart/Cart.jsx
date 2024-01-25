@@ -18,6 +18,8 @@ const Cart = () => {
     addItemToCart(item);
   };
 
+ 
+
   const decreaseQty = (cartItem) => {
     const newQty = cartItem?.quantity - 1;
     const item = { ...cartItem, quantity: newQty };
@@ -40,7 +42,6 @@ const Cart = () => {
       tax: taxAmount,
       totalAmount
     }
-
     saveOnCheckout(data)
 
   }
@@ -70,7 +71,7 @@ const Cart = () => {
                           <figure className="flex leading-5">
                             <div>
                               <div className="block w-16 h-16 rounded border border-gray-200 overflow-hidden">
-                              <Image src={cartItem.image} alt={cartItem.name} />
+                              <img src={cartItem.image} alt={cartItem.name} />
                               </div>
                             </div>
                             <figcaption className="ml-3">

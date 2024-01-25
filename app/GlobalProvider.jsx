@@ -7,11 +7,13 @@ import { SessionProvider } from "next-auth/react";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Provider from "./Provider";
 
 export function GlobalProvider({ children }){
     return(
         <>
     <ToastContainer position="bottom-right" />
+    <Provider>
         <AuthProvider>
             <CartProvider>
                 <OrderProvider>
@@ -21,6 +23,7 @@ export function GlobalProvider({ children }){
                 </OrderProvider>
             </CartProvider>
         </AuthProvider>
+    </Provider>
         </>
     )
 }

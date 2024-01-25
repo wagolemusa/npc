@@ -72,7 +72,7 @@ export const deleteOrder = async (req, res) => {
 
 // get user orders
 export const myOrders = async (req, res) => {
-  const resPerPage = 2;
+  const resPerPage = 5;
   const ordersCount = await Order.countDocuments();
 
   const apiFilters = new APIFilters(Order.find(), req.query).pagination(
